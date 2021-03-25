@@ -1,0 +1,39 @@
+form {
+  width: 280px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+}
+label {
+  display: flex;
+  flex-direction: column;
+}
+input {
+  margin-bottom: 8px;
+}
+button {
+  margin-top: 16px;
+}
+.input-error {
+    background-color: pink;
+}
+.table{
+  display: table;
+  width:100%;
+  border-collapse:collapse;
+  font-family: sans-serif;
+  color: #222;
+}
+.table-row{
+  display: table-row;
+}
+.table-cell, .table-head{
+  display: table-cell;
+  padding:1em;
+  border:#ddd 1px solid;
+}
+.table-head{
+    font-weight:bold;
+}
+  
