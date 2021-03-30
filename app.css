@@ -16,24 +16,28 @@ button {
   margin-top: 16px;
 }
 .input-error {
-    background-color: pink;
+  background-color: pink;
 }
-.table{
+.table {
   display: table;
-  width:100%;
-  border-collapse:collapse;
+  width: 100%;
+  border-collapse: collapse;
   font-family: sans-serif;
   color: #222;
 }
-.table-row{
+.table-row {
   display: table-row;
 }
-.table-cell, .table-head{
+.table-cell,
+.table-head {
   display: table-cell;
-  padding:1em;
-  border:#ddd 1px solid;
+  padding: 1em;
+  border: #ddd 1px solid;
 }
-.table-head{
-    font-weight:bold;
+.table-head {
+  font-weight: bold;
 }
-  
+#error_wrapper {
+  width: 280px;
+  color: tomato;
+}

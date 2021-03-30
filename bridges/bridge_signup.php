@@ -1,44 +1,111 @@
 <?php
+// ###############################
 // Backend Validation
+// ###############################
+
 // Validate: name
-if( strlen($_POST['name']) < 2 || strlen($_POST['name']) > 50){
-    $error_message = 'Name must be at least 2 characters and no longer than 50 characters.';
-    header("Location: /mandatory-1/signup/error/$error_message");
-    exit();
+if( ! isset($_POST['name']) ){
+  $error_message = 'Name is missing';
+  header("Location: /signup/error/$error_message");
+  exit();
 }
+if( strlen($_POST['name']) < 2 ){
+  $error_message = 'Name is too short. It must be at least 2 characters and no longer than 50 characters.';
+  header("Location: /mandatory-1/signup/error/$error_message");
+  exit();
+}
+if( strlen($_POST['name']) > 50){
+  $error_message = 'Name is too long. It must be at least 2 characters and no longer than 50 characters.';
+  header("Location: /mandatory-1/signup/error/$error_message");
+  exit();
+}
+
 // Validate: last name
-if( strlen($_POST['last_name']) < 2 || strlen($_POST['last_name']) > 50){
-    $error_message = 'Last name must be at least 2 characters and no longer than 50 characters.';
-    header("Location: /mandatory-1/signup/error/$error_message");
-    exit();
+if( ! isset($_POST['last_name']) ){
+  $error_message = 'Last name is missing';
+  header("Location: /signup/error/$error_message");
+  exit();
 }
+if( strlen($_POST['last_name']) < 2 ){
+  $error_message = 'Last name is too short. It must be at least 2 characters and no longer than 50 characters.';
+  header("Location: /mandatory-1/signup/error/$error_message");
+  exit();
+}
+if( strlen($_POST['last_name']) > 50){
+  $error_message = 'Last name is too long. It must be at least 2 characters and no longer than 50 characters.';
+  header("Location: /mandatory-1/signup/error/$error_message");
+  exit();
+}
+
 // Validate: age
-if( strlen($_POST['age']) < 2 || strlen($_POST['age']) > 50){
-    $error_message = 'Age must be between 1 and 200.';
-    header("Location: /mandatory-1/signup/error/$error_message");
-    exit();
+if( ! isset($_POST['age']) ){
+  $error_message = 'Age is missing';
+  header("Location: /signup/error/$error_message");
+  exit();
 }
+if( ! ctype_digit($_POST['age']) ) {
+  $error_message = 'Age must be a digit.';
+  header("Location: /mandatory-1/signup/error/$error_message");
+  exit();
+}
+if( $_POST['age'] < 0 ) { 
+  $error_message = 'Age input is a negative number. It must be between 1 and 200.';
+  header("Location: /mandatory-1/signup/error/$error_message");
+  exit();
+}
+if( $_POST['age'] > 200 ) { 
+  $error_message = 'Age input value is too large. It must be between 1 and 200.';
+  header("Location: /mandatory-1/signup/error/$error_message");
+  exit();
+}
+
 // Validate: email
+if( ! isset($_POST['email']) ){
+  $error_message = 'Email is missing';
+  header("Location: /signup/error/$error_message");
+  exit();
+}
 if( ! filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) ){
-    $error_message = 'The email is not valid.';
+  $error_message = 'The email is not valid.';
   header('Location: /mandatory-1/signup/error/$error_message');
   exit();
 }
+
 // Validate: password
-if( empty($_POST['password']) || strlen($_POST['password']) < 5 || strlen($_POST['password']) > 50){
-    $error_message = 'The password must be at least 5 characters and no more than 20 characters.';
+if( ! isset($_POST['password']) ){
+  $error_message = 'Password is missing';
+  header("Location: /signup/error/$error_message");
+  exit();
+}
+if( strlen($_POST['password']) < 5 ){
+  $error_message = 'The password is too short. It must be at least 5 characters and no more than 20 characters.';
   header('Location: /mandatory-1/signup/error/$error_message');
   exit();
 }
+if( strlen($_POST['password']) > 50){
+  $error_message = 'The password is too large. It must be at least 5 characters and no more than 20 characters.';
+  header('Location: /mandatory-1/signup/error/$error_message');
+  exit();
+}
+
 // Validate: repeat password
-if( empty($_POST['repeat_password']) || $_POST['repeat_password'] != $_POST['password']){
-    $error_message = 'Passwords must match.';
-    header('Location: /mandatory-1/signup/error/$error_message');
-    exit();
+if( ! isset($_POST['repeat_password']) ){
+  $error_message = 'Repeat password input field is empty. You must repeat your password.';
+  header("Location: /signup/error/$error_message");
+  exit();
+}
+if( $_POST['repeat_password'] != $_POST['password']){
+  $error_message = 'Repeat password input field does not match password input field. Passwords must match.';
+  header('Location: /mandatory-1/signup/error/$error_message');
+  exit();
   }
 
-// If success
+
+// If validation was a success
+
+// ###############################
 // Connect to data base
+// ###############################
 require_once(__DIR__.'/../db.php');
 // Create a user and store it in database
 try{
@@ -53,15 +120,8 @@ try{
   $statement->bindParam(':password', $_POST['password']);
   // Execute the prepared statement
   $statement->execute();
-  echo "Records inserted successfully.";
   header('Location: /mandatory-1/login');
   exit();
 } catch(PDOException $e){
-  echo 'Email is already in use';
   exit();
 }
-
-// Close statement
-unset($statement);
-// Close connection
-unset($db);

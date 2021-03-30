@@ -23,7 +23,6 @@
       <div>Hi, $user->name</div>
       <div>Status: $status</div>
       <div>Email: $user->email</div>
-      <div>password: $user->password</div>
     </div>
     ";
   ?>

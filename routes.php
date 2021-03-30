@@ -41,8 +41,8 @@ function serve_login(){
 }
 
 // ##################################################
-get('/mandatory-1/login/error', 'serve_login_error');
-function serve_login_error(){
+get('/mandatory-1/login/error/:login_error', 'serve_login_error');
+function serve_login_error($login_error){
   $page_title = 'login';
   $display_error = true;
   require_once(__DIR__.'/views/view_top.php');
@@ -72,6 +72,16 @@ function serve_users(){
 get('/mandatory-1/signup', 'serve_signup');
 function serve_signup(){
   $page_title = 'Signup';
+  require_once(__DIR__.'/views/view_top.php');
+  require_once(__DIR__.'/views/view_signup.php');
+  require_once(__DIR__.'/views/view_bottom.php');
+  exit();
+}
+// ##################################################
+get('/mandatory-1/signup/error/:error_message', 'serve_signup_error');
+function serve_signup_error($error_message){
+  $page_title = 'Signup';
+  $display_error = true;
   require_once(__DIR__.'/views/view_top.php');
   require_once(__DIR__.'/views/view_signup.php');
   require_once(__DIR__.'/views/view_bottom.php');
